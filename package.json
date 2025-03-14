@@ -5,7 +5,7 @@
     "format": "prettier --write {src,scripts}/**/*.ts",
     "build:production": "rollup -c ./scripts/rollup.config.js --environment NODE_ENV:production",
     "build": "rollup -c ./scripts/rollup.config.js",
-    "watch": "rollup -w -c ./scripts/rollup.config.js"
+    "watch": "rollup -w --watch.usePolling -c ./scripts/rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,6 @@
     "@swc/core": "^1.2.118",
     "@swc/helpers": "^0.3.2",
     "@types/bun": "latest",
-    "@types/chokidar": "^2.1.7",
     "@types/node": "^22.13.5",
     "builtin-modules": "^3.2.0",
     "fs-jetpack": "^4.2.0",

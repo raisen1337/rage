@@ -4,12 +4,16 @@ import { ref, watch } from "vue";
 const inSafezone = ref(false);
 const playerName = ref("notraisen");
 const playerId = ref(1);
-const playerCash = ref(3000);
+const playerCash = ref(153217823);
 const maxPlayers = ref(1000);
 const currentPlayers = ref(30);
 const questions = ref(2);
 const tickets = ref(258);
 const isAdmin = ref(false);
+const actHud = ref(true);
+const payday = ref({
+	seconds: 3600,	
+})
 
 // Reactivity for animations
 const animateTickets = ref(false);
@@ -28,6 +32,15 @@ watch(tickets, () => triggerAnimation(animateTickets));
 watch(questions, () => triggerAnimation(animateQuestions));
 watch(currentPlayers, () => triggerAnimation(animatePlayers));
 
+const formatMoney = (value: number) => {
+	if (value >= 1000000) {
+		return `${(value / 1000000).toFixed(1)}M`;
+	} else if (value >= 1000) {
+		return `${(value / 1000).toFixed(1)}K`;
+	}
+	return value.toString();
+};
+
 // Time & Date
 const formatWithLeadingZero = (number: number) =>
 	number < 10 ? `0${number}` : number;
@@ -39,6 +52,11 @@ const date = ref(
 	`${formatWithLeadingZero(new Date().getDate())}.${formatWithLeadingZero(new Date().getMonth() + 1)}.${new Date().getFullYear()}`,
 );
 
+const formateSeconds = (seconds: number) => {
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = seconds % 60;
+	return `${formatWithLeadingZero(minutes)}:${formatWithLeadingZero(remainingSeconds)}`;
+};
 declare const mp: any;
 
 mp.events.add("updateUI", (data: any) => {
@@ -86,177 +104,51 @@ mp.events.add("unequipWeapon", () => {
 		weaponHud.classList.add("hidden");
 	}
 });
+
 </script>
 
 <template>
-	<div
-		class="w-full h-full font-poppins bg-transparent flex flex-col justify-between p-6 animate-fade-in-fast absolute top-0"
-	>
-		<div class="flex flex-col w-full h-fit gap-2">
-			<div
-				class="w-full h-fit flex flex-row items-center justify-end gap-2"
-			>
-				<div
-					class="flex items-center justify-center w-[40px] border-2 bg-red-950/90 border-red-500 h-[40px] rounded-full"
-				>
-					<i class="fa-solid fa-user text-red-500"></i>
-				</div>
-				<span class="text-white font-extralight text-xl">{{
-					playerName
-				}}</span>
-				<div
-					class="flex flex-row items-center gap-2 pl-3 pr-2 py-1 bg-black/70 border-zinc-600 border rounded-full w-fit h-fit"
-				>
-					<span class="text-white font-extralight text-xl">{{
-						time
-					}}</span>
-					<span
-						class="text-white px-2 py-1 text-normal font-light bg-black rounded-2xl font-bai uppercase"
-					>
-						{{ date }}
-					</span>
-				</div>
-				<div
-					v-show="inSafezone"
-					class="flex flex-row items-center gap-2 px-3 py-2 bg-red-950/80 border-red-600 border rounded-full w-fit h-fit"
-				>
-					<div
-						class="flex items-center justify-center w-[25px] border-2 bg-red-500 border-red-500 h-[25px] bg-zinc-900/80 rounded-full"
-					>
-						<i class="fa-solid text-xs fa-shield text-red-500"></i>
+	<div class="w-full h-full !font-spg bg-black/0 flex flex-col justify-between p-6 animate-fade-in-fast absolute top-0 select-none"
+		v-if="actHud">
+		<div class="w-screen absolute top-0 left-0 h-screen bg-radient-circle-tl from-black/40 via-transparent to-transparent"></div>
+		<div class="w-screen absolute top-0 left-0 h-screen bg-radient-circle-tr from-black/40 via-transparent to-transparent"></div>
+		<div class="w-full h-fit bg-red-600/0 flex flex-col items-end justify-start p-2">
+			<div class="flex flex-col gap-2">
+				<div class="flex flex-row items-start">
+					<div class="flex flex-row mt-1 mr-4 items-center gap-2">
+						<span class="text-white/50 text-xs">{{ playerId }}</span>
+						<i class="fa-solid fa-hashtag text-xs text-white/50"></i>
+						<span class="text-white/50 text-xs">{{  currentPlayers }}/{{ maxPlayers }}</span>
+						<i class="fa-solid fa-user text-xs text-white/50"></i>
 					</div>
-					<span
-						class="text-red-500 font-bai text-sm uppercase font-medium"
-						>Safezone</span
-					>
-				</div>
-				<!-- <div
-                    class="flex items-center justify-center w-[40px] border-2 bg-red-950/90 border-red-500 h-[40px] bg-zinc-900/80 rounded-full">
-                    <i class="fa-solid fa-microphone text-red-500"></i>
-                </div> -->
-				<span class="text-white font-bai text-3xl uppercase font-medium"
-					>REVERSY</span
-				>
-			</div>
-			<div
-				class="w-full h-fit flex flex-row items-center justify-end gap-2"
-			>
-				<div
-					v-show="isAdmin"
-					class="flex flex-row items-center gap-2 pl-3 pr-2 py-1 bg-black/70 border-zinc-600 border rounded-full w-fit h-fit"
-				>
-					<span
-						:class="{ 'scale-animation': animateQuestions }"
-						class="text-white font-extralight text-lg"
-					>
-						{{ questions }}
-					</span>
-					<span
-						class="text-white px-2 py-1 text-sm font-light bg-black rounded-2xl font-bai uppercase"
-					>
-						Intrebari
-					</span>
-				</div>
-				<div
-					v-show="isAdmin"
-					class="flex flex-row items-center gap-2 pl-3 pr-2 py-1 bg-black/70 border-zinc-600 border rounded-full w-fit h-fit"
-				>
-					<span
-						:class="{ 'scale-animation': animateTickets }"
-						class="text-white font-extralight text-lg"
-					>
-						{{ tickets }}
-					</span>
-					<span
-						class="text-white px-2 py-1 text-sm font-light bg-black rounded-2xl font-bai uppercase"
-					>
-						Tichete
-					</span>
-				</div>
-				<div class="flex flex-row items-center gap-1">
-					<div
-						class="flex items-center justify-center w-[35px] border-2 bg-red-950/90 border-red-500 h-[35px] rounded-full"
-					>
-						<i class="fa-solid fa-hashtag text-sm text-red-500"></i>
+					<div class="flex flex-col text-end">
+						<span class="text-white text-md font-bold">VIPURI ROMANIA</span>
+						<span class="text-white/50 text-xs -mt-2">discord.gg/vipuriro</span>
 					</div>
-					<span class="text-white text-lg">ID: {{ playerId }}</span>
+					<img class="w-[60px] -mt-4 ml-3"
+						src="https://cdn.gta5lbrp.com/Bdlp/logonotxt.png"
+						alt="">
 				</div>
-				<div class="flex flex-row items-center gap-1">
-					<div
-						class="flex items-center justify-center w-[35px] border-2 bg-red-950/90 border-red-500 h-[35px] rounded-full"
-					>
-						<i class="fa-solid fa-wifi text-sm text-red-500"></i>
-					</div>
-					<span
-						:class="{ 'scale-animation': animatePlayers }"
-						class="text-white text-lg"
-					>
-						{{ currentPlayers }}
-					</span>
-					<span class="text-white/50 text-lg">/</span>
-					<span class="text-white/50 text-sm">{{ maxPlayers }}</span>
+				<div class="flex relative bg-gradient-to-l mt-3 from-pink-200/30 via-transparent to-transparent flex-row items-center justify-end">
+					<div class="flex flex-col text-end mr-7">
+						<span class="text-white text-sm font-bold">PAYDAY</span>
+						<span class="text-white/50 text-xs">{{ formateSeconds(payday.seconds) }}</span>
+					</div>	
+					<img 
+					class="w-[100px] absolute z-[5] -right-7 -mr-[19px]"
+					src="https://cdn.gta5lbrp.com/Bdlp/Hud/payday.png" alt="" srcset="">
+				</div>
+				<div class="flex relative bg-gradient-to-l mt-3 from-yellow-200/30 via-transparent to-transparent flex-row items-center justify-end">
+					<div class="flex flex-col text-end mr-7">
+						<span class="text-white/50 text-xs font-bold">BANII CASH</span>
+						<span class="text-yellow-200 text-sm">${{ formatMoney(playerCash) }}</span>
+					</div>	
+					<img 
+					class="w-[120px] absolute -mr-[57px]"
+					src="https://cdn.gta5lbrp.com/Bdlp/Hud/Money.png" alt="" srcset="">
 				</div>
 			</div>
-			<div class="flex flex-row items-center justify-end gap-6 -mr-10">
-				<div class="flex flex-col items-end">
-					<span class="text-white/50 font-bai uppercase text-md"
-						>Cash money</span
-					>
-					<span
-						class="text-[#FF0000] font-bai font-extrabold text-2xl"
-					>
-						${{ playerCash.toLocaleString() }}
-					</span>
-				</div>
-				<i class="fa-solid fa-rhombus text-[#FF0000]"></i>
-			</div>
-			<div
-				id="weaponHud"
-				class="hidden w-full h-fit flex flex-col justify-end items-end transition-all"
-			>
-				<img
-					id="weaponImage"
-					class="max-w-[12rem] brightness-[0.5] scale-x-[-1]"
-					style=""
-					alt=""
-					src="https://vespura.com/fivem/weapons/images/WEAPON_ADVANCEDRIFLE.png"
-				/>
-				<div class="flex flex-row items-center gap-2">
-					<!-- Ammo icon SVG -->
-					<svg
-						style="width: calc(40px * var(--config-size))"
-						fill="#ff0000"
-						version="1.1"
-						id="Layer_1"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink"
-						viewBox="0 0 503.607 503.607"
-						xml:space="preserve"
-					>
-						<!-- SVG content omitted for brevity -->
-					</svg>
-					<div
-						class="flex flex-col bg-red-500/0 items-end w-[20rem] justify-end"
-					>
-						<span
-							id="weaponName"
-							style="
-								font-size: calc(1.125rem * var(--config-size));
-							"
-							class="mt-2 w-full text-end font-bold text-white"
-						>
-							Assault Rifle MK2
-						</span>
-						<span
-							id="ammoText"
-							style="font-size: calc(1rem * var(--config-size))"
-							class="mt-2 text-white/50 font-normal"
-						>
-							30/240
-						</span>
-					</div>
-				</div>
-			</div>
+
 		</div>
 	</div>
 </template>

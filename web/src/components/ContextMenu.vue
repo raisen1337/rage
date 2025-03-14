@@ -357,10 +357,10 @@ onUnmounted(() => {
   <div v-show="menuData" class="w-screen !font-rajdhani h-screen absolute top-0 z-[100]">
     <div
       v-show="menuData"
-      class="absolute top-64 right-12 bg-radient-circle-tl from-zinc-950/90 to-zinc-900/90 rounded-lg w-[23rem] p-4 flex flex-col"
+      class="absolute bottom-[24rem] right-12 bg-radient-circle-tl from-zinc-950/0 to-zinc-900/0 rounded-lg w-[23rem] p-4 flex flex-col"
     >
-      <span class="text-white text-xl font-bold">{{ menuData.title }}</span>
-      <span class="text-white/50">{{ menuData.subtitle }}</span>
+      <span class="text-white text-xl hidden font-bold">{{ menuData.title }}</span>
+      <span class="text-white/50 hidden">{{ menuData.subtitle }}</span>
 
       <div
         ref="menuContainerRef"
@@ -369,18 +369,20 @@ onUnmounted(() => {
       >
       <template v-for="(item, index) in menuData.items" :key="item.id">
         <div
-        class="flex items-center justify-between p-2 rounded-lg mb-2 text-lg cursor-pointer transition-all"
+        class="flex items-center justify-between p-2 rounded-sm mb-2 text-lg cursor-pointer transition-all"
         :class="[
-          selectedItem === index ? 'bg-red-600/80 text-black' : 'bg-zinc-800/80',
+          selectedItem === index ? 'bg-gradient-to-r from-pink-500/50 via-black/10 to-transparent text-black' : 'bg-gradient-to-r from-black/60 via-transparent to-transparent',
           isAnyDropdownOpen && selectedItem !== index ? 'pointer-events-none opacity-50' : '',
            isColorPickerOpen && selectedItem !== index ? 'pointer-events-none opacity-50' : '',
         ]"
       >
-           <div class="flex flex-row items-center text-sm gap-2">
+           <div class="flex flex-row p-2 items-center text-sm gap-4">
               <div
-                class="flex items-center justify-center text-white bg-white/10 rounded-lg w-[40px] h-[40px]"
+                class="flex items-center justify-center text-white rotate-45 bg-white/10 rounded-xs w-[40px] h-[40px]"
               >
-                <i :class="item.icon"></i>
+                <i 
+                class="-rotate-45"
+                :class="item.icon"></i>
               </div>
               <div class="flex flex-col">
                 <span class="text-white">{{ item.text }}</span>

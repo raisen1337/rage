@@ -38,7 +38,7 @@ mp.events.add("showScoreboard", (players: any, isAdmin: any) => {
 
 <template>
     <div v-if="showScoreboard" id="playerListContainer"
-        class="w-screen h-screen z-[100000] absolute top-0 bg-gradient-to-b from-black/90 via-black/90 to-red-950/90 flex flex-col items-center justify-start pt-32 pb-16 animate-fade-in-fast">
+        class="w-screen h-screen z-[100000] absolute top-0 bg-gradient-to-b from-black/90 via-black/90 to-pink-950/90 flex flex-col items-center justify-start pt-32 pb-16 animate-fade-in-fast">
         <h1 class="text-white text-6xl font-bold uppercase">Online Players</h1>
         <span class="text-[#FF0000] text-lg font-bold">VIEW ALL CONNECTED PLAYERS</span>
         <div id="playerList"
@@ -46,14 +46,14 @@ mp.events.add("showScoreboard", (players: any, isAdmin: any) => {
             <div v-for="player in playerList" :key="player.id"
                 class="w-full h-[4rem] bg-black/60 rounded-xl flex flex-row justify-between p-2 items-center animate-fade-in">
                 <div class="flex flex-row items-center">
-                    <div class="w-[50px] h-[50px] bg-red-950 rounded-xl flex items-center justify-center">
-                        <i class="fa-solid fa-user text-red-600"></i>
+                    <div class="w-[50px] h-[50px] bg-pink-950 rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-user text-pink-600"></i>
                     </div>
                     <div class="flex flex-col ml-2">
                         <span class="text-white font-medium">{{ player.name }} ({{ player.pId }})</span>
                         <div class="flex mt-1 flex-row items-center gap-2">
                             <div v-if="player.admin"
-                                class="w-fit h-fit px-3 py-[0.2rem] text-xs bg-red-600/40 text-white rounded-xl">{{ player.admin ? 'Admin' : "" }}</div>
+                                class="w-fit h-fit px-3 py-[0.2rem] text-xs bg-pink-600/40 text-white rounded-xl">{{ player.admin ? 'Admin' : "" }}</div>
                             <div v-if="player.faction"
                                 class="w-fit h-fit px-3 py-[0.2rem] text-xs bg-violet-700/90 text-white rounded-xl">
                                 {{ player.faction.name }}
@@ -63,16 +63,16 @@ mp.events.add("showScoreboard", (players: any, isAdmin: any) => {
                 </div>
                 <div v-if="isAdmin" class="flex h-full flex-row items-center">
                     <button @click="mp.trigger('admTp', player.id)"
-                        class="w-[40px] h-full bg-red-950/90 text-white font-bold rounded-xl flex items-center justify-center">
-                        <i class="fa-solid fa-location-dot text-red-600"></i>
+                        class="w-[40px] h-full bg-pink-950/90 text-white font-bold rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-location-dot text-pink-600"></i>
                     </button>
                     <button @click="mp.trigger('admRevive', player.id)"
-                        class="w-[40px] h-full bg-red-950/90 text-white font-bold rounded-xl flex items-center justify-center">
-                        <i class="fa-solid fa-heart text-red-600"></i>
+                        class="w-[40px] h-full bg-pink-950/90 text-white font-bold rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-heart text-pink-600"></i>
                     </button>
                     <button @click="mp.trigger('admTpTo', player.id)"
-                        class="w-[40px] h-full bg-red-950/90 text-white font-bold rounded-xl flex items-center justify-center">
-                        <i class="fa-brands fa-golang text-red-600"></i>
+                        class="w-[40px] h-full bg-pink-950/90 text-white font-bold rounded-xl flex items-center justify-center">
+                        <i class="fa-brands fa-golang text-pink-600"></i>
                     </button>
                 </div>
             </div>

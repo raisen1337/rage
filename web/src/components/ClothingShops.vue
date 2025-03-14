@@ -219,8 +219,8 @@ function saveClothing() {
 
                 <div class="flex flex-col gap-2 mt-2">
                     <!-- Button -->
-                    <button @click="saveClothing" class="bg-radient-circle-c from-red-600 to-red-500 w-[25rem] h-[5rem] rounded-md mt-4
-                    flex items-center justify-center text-white text-lg font-medium hover:from-red-950 hover:to-red-900
+                    <button @click="saveClothing" class="bg-radient-circle-c from-pink-600 to-pink-500 w-[25rem] h-[5rem] rounded-md mt-4
+                    flex items-center justify-center text-white text-lg font-medium hover:from-pink-950 hover:to-pink-900
                     transition-all">
                         Salveaza si continua
                     </button>
@@ -231,7 +231,7 @@ function saveClothing() {
                     <div 
                         class="flex flex-col gap-2 w-fit h-fit bg-white/0 !z-[100000000]">
                         <div class="flex flex-row items-center gap-1">
-                            <i class="fas fa-tshirt text-3xl text-red-400"></i>
+                            <i class="fas fa-tshirt text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Clothing</span>
                         </div>
                         <span class="text-white/40 text-lg font-light">Modifica-ti hainele si accesoriile!</span>
@@ -250,11 +250,11 @@ function saveClothing() {
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <button @click="updateComponentDrawable(component.component_id, -1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-left text-2xl"></i>
                                         </button>
                                         <button @click="updateComponentDrawable(component.component_id, 1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-right text-2xl"></i>
                                         </button>
                                     </div>
@@ -280,11 +280,11 @@ function saveClothing() {
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <button @click="updatePropDrawable(prop.prop_id, -1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-left text-2xl"></i>
                                         </button>
                                         <button @click="updatePropDrawable(prop.prop_id, 1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-right text-2xl"></i>
                                         </button>
                                     </div>
@@ -306,7 +306,7 @@ function saveClothing() {
                     <div class="flex flex-col gap-2 w-fit h-fit bg-white/0 z-10">
                         <!-- clothing -->
                         <button @click="openClothesMenu"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-tshirt text-2xl"></i>
                         </button>
 
@@ -315,19 +315,19 @@ function saveClothing() {
 
                         <!-- head -->
                         <button @click="switchCamera('head')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-head-side text-2xl"></i>
                         </button>
 
                         <!-- body -->
                         <button @click="switchCamera('body')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-child text-2xl"></i>
                         </button>
 
                         <!-- legs -->
                         <button @click="switchCamera('legs')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-shoe-prints text-2xl"></i>
                         </button>
 

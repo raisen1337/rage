@@ -58,7 +58,7 @@ function checkVisibility() {
       newElement.id = `interact-${id}`;
       newElement.className = "interact-element fixed !font-rajdhani m-auto bg-transparent flex flex-row items-center gap-4 rounded-xl w-[16rem] h-[4rem]";
       newElement.innerHTML = `
-        <div class="w-[50px] h-[50px] border-[4px] p-1 border-red-600 rotate-45">
+        <div class="w-[50px] h-[50px] border-[4px] p-1 border-pink-600 rotate-45">
           <div class="w-full h-full flex items-center justify-center text-center border-2 border-zinc-100">
             <span class="text-white font-bold rotate-[-45deg] interact-key">${interact.key}</span>
           </div>

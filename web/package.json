@@ -20,6 +20,7 @@
     "@cyhnkckali/vue3-color-picker": "^2.0.7",
     "@syncfusion/ej2-vue-circulargauge": "^28.2.3",
     "@vue-youtube/component": "^0.0.6",
+    "@vue/tsconfig": "^0.7.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jquery": "^3.7.1",

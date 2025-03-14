@@ -1,15 +1,36 @@
 import { chat } from './chat';
 import { INV_OPEN } from './inventory';
-export let client_ui = mp.browsers.new(`${mp.players.local.ip === '192.168.1.133' ? 'http://localhost:5173' : 'http://79.118.112.192:5173'}`);
+export let client_ui = mp.browsers.new(`http://65.108.13.43:5173/`);
 
 export function getBrowser() {
 	return client_ui;
 }
 
+export var NUI_FOCUSED = false;
+
+async function PreventPauseMenuOnFocus(){
+	while(NUI_FOCUSED) {
+		mp.game.controls.disableControlAction(0, 200, true); // Disable the pause menu
+		await new Promise<void>((resolve) => setTimeout(resolve, 0));
+	}
+}
+PreventPauseMenuOnFocus();
+
 export function setNuiFocus(locked: boolean, hasCursor: boolean) {
-	client_ui.call('focus', locked, hasCursor);
-	mp.gui.cursor.show(locked, hasCursor);
-	mp.gui.cursor.visible = hasCursor;
+	if(!locked || !hasCursor) {
+		setTimeout(() => {
+			client_ui.call('focus', locked, hasCursor);
+			mp.gui.cursor.show(locked, hasCursor);
+			mp.gui.cursor.visible = hasCursor;
+			NUI_FOCUSED = locked;
+		}, 500);
+	}else{
+		client_ui.call('focus', locked, hasCursor);
+		mp.gui.cursor.show(locked, hasCursor);
+		mp.gui.cursor.visible = hasCursor;
+		NUI_FOCUSED = locked;
+	}
+	
 }
 
 interface MenuItem {
@@ -118,6 +139,7 @@ mp.events.add('closeMenus', () => {
 	setNuiFocus(false, false);
 	MENU_OPEN = false;
 });
+//
 
 export function addMenuItem(menuId: number, item: Omit<MenuItem, 'id'>) {
 	if (!menus[menuId]) {
@@ -210,14 +232,6 @@ export var playerData: any = {};
 
 export const SERVER_PUBLIC_IP = '79.118.112.192';
 
-mp.events.add('changeBrowserUrl', (local: boolean) => {
-	if (local) {
-		chat.browser.url = 'http://localhost:5173';
-		chat.browser.call('prefferedIp', '127.0.0.1');
-	} else {
-		chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-	}
-});
 
 mp.events.add('corefx:updateData', (data: any) => {
 	if (typeof data === 'string') data = JSON.parse(data);

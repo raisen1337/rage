@@ -662,7 +662,8 @@ export function moveItem(player: PlayerMp, from: any, to: any, cb: Function) {
 }
 
 mp.events.addProc(`inventory:moveItem`, (player: PlayerMp, from: any, to: any) => {
-	moveItem(player, from, to, (_data: any) => {});
+	moveItem(player, from, to, (_data: any) => {
+	});
 	return Core.players[player.rgscId].inventory;
 });
 
@@ -726,7 +727,10 @@ mp.events.addProc('getClosestVehicleInventory', (player: PlayerMp) => {
 		})
 		.catch((error: any) => {
 			console.error(error);
-			return { success: false, message: `Error retrieving vehicle inventory from database. See server console for details.` }; // Specific error
+			return {
+				success: false,
+				message: `Error retrieving vehicle inventory from database. See server console for details.`
+			}; // Specific error
 		});
 });
 
@@ -790,7 +794,10 @@ mp.events.addProc('getVehicleInventory', (player: PlayerMp, plate: any) => {
 		})
 		.catch((error: any) => {
 			console.error(error);
-			return { success: false, message: `Error retrieving vehicle glovebox inventory from database. See server console for details.` }; // Specific error
+			return {
+				success: false,
+				message: `Error retrieving vehicle glovebox inventory from database. See server console for details.`
+			}; // Specific error
 		});
 });
 
@@ -802,7 +809,10 @@ mp.events.addProc('inventory:moveItemToPrimary', async (player, from, to, moveDa
 	let inventory = (await Inventories.findOne({ where: { identifier: moveData.identifier } })) as any;
 	if (!inventory) {
 		console.log(`Secondary inventory not found for identifier ${moveData.identifier}`);
-		return { success: false, message: `Secondary inventory with identifier '${moveData.identifier}' not found in database.` }; // Specific error
+		return {
+			success: false,
+			message: `Secondary inventory with identifier '${moveData.identifier}' not found in database.`
+		}; // Specific error
 	}
 
 	// Find the item in the secondary inventory by its slot
@@ -918,7 +928,10 @@ mp.events.addProc('inventory:moveItemToSecondary', async (player, from, to, move
 	let inventory = (await Inventories.findOne({ where: { identifier: moveData.identifier } })) as any;
 	if (!inventory) {
 		console.log(`Secondary inventory not found for identifier ${moveData.identifier}`);
-		return { success: false, message: `Secondary inventory with identifier '${moveData.identifier}' not found in database.` }; // Specific error
+		return {
+			success: false,
+			message: `Secondary inventory with identifier '${moveData.identifier}' not found in database.`
+		}; // Specific error
 	}
 
 	// Check weight in secondary inventory before moving
@@ -944,7 +957,10 @@ mp.events.addProc('inventory:moveItemToSecondary', async (player, from, to, move
 	} else {
 		let freeSlot = findFreeSlot(inventory.inventory.items);
 		if (freeSlot === null) {
-			return { success: false, message: `Secondary inventory (identifier: ${moveData.identifier}) is full. No free slots available.` }; // Specific error
+			return {
+				success: false,
+				message: `Secondary inventory (identifier: ${moveData.identifier}) is full. No free slots available.`
+			}; // Specific error
 		}
 		inventory.inventory.items.push({ ...item, amount: quantity, slot: freeSlot });
 	}
@@ -1061,7 +1077,10 @@ mp.events.add('admin:giveMoney', (player: PlayerMp, playerId: any, moneyType: st
 
 	chat.sendToAdmins(`^1[INV]^0 ${player.name} has given $${Core.formatNumber(parseInt(amount))} ${moneyType} to ${targetPlayer.name}`);
 
-	return { success: true, message: `Gave $${Core.formatNumber(parseInt(amount))} ${moneyType} to player ${targetPlayer.name}.` }; // Improved success message
+	return {
+		success: true,
+		message: `Gave $${Core.formatNumber(parseInt(amount))} ${moneyType} to player ${targetPlayer.name}.`
+	}; // Improved success message
 });
 
 mp.events.addProc('inventory:giveItemToPlayer', (player: PlayerMp, slot: any, playerId: any, quantity: any) => {
@@ -1227,6 +1246,7 @@ function handleWeapon(player: PlayerMp, weaponName: string, weaponLabel: string,
 			//unequip old one
 			player.call('corefx:unequipWeapon', [currentWeapon.name]);
 
+
 			player.call('corefx:equipWeapon', [weaponName, newAmmo || 0, weaponLabel]);
 		} else if (weaponData && !weaponData.equipped) {
 			// Dacă arma există, dar nu e echipată, o echipăm
@@ -1250,6 +1270,7 @@ function handleWeapon(player: PlayerMp, weaponName: string, weaponLabel: string,
 	}
 
 	// Salvăm modificările în baza de date și sincronizăm datele
+
 	Account.update({ weapons: Player.weapons }, { where: { license: player.rgscId } });
 	player.call('corefx:syncData', [Player]);
 }
@@ -1290,6 +1311,7 @@ mp.events.add('corefx:updateWeaponAmmo', (player: PlayerMp, weaponName: string, 
 		Account.update({ weapons: Player.weapons }, { where: { license: player.rgscId } });
 	}
 });
+
 
 //rifle_ammo (check if current ammo has rifle type)
 registerItem('rifle_ammo', 'Rifle Ammo', 'Muniție pentru puști', 0.01, true, true, true, true, true, true, true, (player: PlayerMp, amount: any) => {

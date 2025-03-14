@@ -6,6 +6,12 @@ import { Account, Blips, Vehicles } from './db'; // Import Sequelize models and 
 type PlayerMp = any;
 type VehicleMp = any;
 
+/*
+
+// Define types for player and vehicle
+
+ */
+
 interface CoreInterface {
 	players: { [key: string]: any };
 	adminGrades: { [key: number]: string };
@@ -92,6 +98,7 @@ export const Core: CoreInterface = {
  * Save player account data to database
  * @param player The player whose data to save
  * @returns Promise that resolves when save is complete
+
  */
 async function saveAccount(player: PlayerMp): Promise<void> {
 	if (!player || !player.rgscId || !Core.players[player.rgscId]) return;
@@ -509,9 +516,7 @@ mp.events.add('vehSetMod', async (player: PlayerMp, modType: number, modIndex: n
 	if (!vehicle) return;
 
 	// Validate input
-	if (typeof modType !== 'number' || typeof modIndex !== 'number') {
-		return chat.sendToPlayer(player, `^1[Error] ^0Invalid mod parameters!`);
-	}
+
 
 	// Prevent applying the same mod
 	if (vehicle.getMod(modType) === modIndex) {

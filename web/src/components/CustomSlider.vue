@@ -91,7 +91,7 @@ onUnmounted(() => {
     
     <!-- Thumb -->
     <div 
-      class="absolute w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full cursor-pointer  duration-75 hover:scale-110"
+      class="absolute w-4 h-4 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full cursor-pointer  duration-75 hover:scale-110"
       :style="thumbStyle"
     ></div>
   </div>

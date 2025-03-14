@@ -99,7 +99,8 @@ Account.init({
     },
     weapons: {
         type: sequelize$1.DataTypes.JSON,
-        allowNull: false
+        allowNull: false,
+        defaultValue: JSON.stringify([])
     },
     created_at: {
         type: sequelize$1.DataTypes.DATE,

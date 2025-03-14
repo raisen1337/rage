@@ -47,6 +47,8 @@ export default {
 				'lexend': ['Lexend Deca', 'sans-serif'],
 				'rajdhani': ['Rajdhani', 'sans-serif'],
 				'bai': ['Bai Jamjuree', 'sans-serif'],
+				// Space Grotesk
+				'spg': ['Space Grotesk', 'sans-serif'],
 			},
 			keyframes: {
 				'fade-in-fast': {

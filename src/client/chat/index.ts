@@ -13,6 +13,8 @@ mp.keys.bind(0x54, false, () => {
 	if (INV_OPEN) return;
 	mp.console.logInfo('T pressed');
 	chat.open();
+	chat.open();
+	chat.open();
 });
 
 interface Command {
@@ -35,22 +37,13 @@ interface ChatInterface {
 
 var registeredCommands = {} as any;
 
-mp.console.logInfo(`${mp.players.local.ip}`);
+
 export var chat: ChatInterface = {
 	browser: getBrowser(),
 	on: false,
 	commands: {},
 	open: async () => {
-		let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-		//shoudluselocal is string ('true', 'false)
-		if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-			// chat.browser.url = `http://localhost:5173`
-			chat.browser.call('prefferedIp', 'localhost');
-		}
-		if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-			// chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-			chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-		}
+	
 
 		//filter registerCommands where playerData.admin is less
 		for (const cmd of Object.values(chat.commands)) {
@@ -58,7 +51,7 @@ export var chat: ChatInterface = {
 				delete registeredCommands[cmd.name];
 			}
 		}
-
+		
 		chat.browser.call('chat:open', JSON.stringify(registeredCommands));
 		chat.on = true;
 
@@ -72,16 +65,7 @@ export var chat: ChatInterface = {
 		mp.gui.cursor.show(false, false); //hide cursor
 	},
 	async sendLocalMessage(message: string) {
-		let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-		//shoudluselocal is string ('true', 'false)
-		if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-			// chat.browser.url = `http://localhost:5173`
-			chat.browser.call('prefferedIp', 'localhost');
-		}
-		if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-			// chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-			chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-		}
+		
 		chat.browser.call('chat:addMessage', message);
 	},
 	registerCommand(command: string, callback: (args: any[]) => void, description: string, usage: string, admin: number = 0) {
@@ -101,16 +85,7 @@ export var chat: ChatInterface = {
 	async sendMessage(message: string) {
 		chat.on = false;
 		setNuiFocus(false, false);
-		let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-		//shoudluselocal is string ('true', 'false)
-		if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-			// chat.browser.url = `http://localhost:5173`
-			chat.browser.call('prefferedIp', 'localhost');
-		}
-		if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-			// chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-			chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-		}
+		
 		if (message.startsWith('/')) {
 			const [cmdName, ...args] = message.slice(1).split(' ');
 			const cmd = chat.commands[cmdName];
@@ -192,18 +167,7 @@ chat.registerCommand(
 	0
 );
 
-mp.events.add('corefx:playerReady', async () => {
-	let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-	//shoudluselocal is string ('true', 'false)
-	if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-		chat.browser.url = `http://localhost:5173`;
-		chat.browser.call('prefferedIp', 'localhost');
-	}
-	if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-		chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`;
-		chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-	}
-});
+
 
 chat.registerCommand(
 	'menu',
@@ -244,22 +208,3 @@ chat.registerCommand(
 mp.events.add('playerExitVehicle', (player: PlayerMp, vehicle: VehicleMp) => {
 	chat.browser.call('hideSpeedo');
 });
-
-chat.registerCommand(
-	'fixui',
-	async () => {
-		let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-		//shoudluselocal is string ('true', 'false)
-		if (shouldUseLocal == 'true') {
-			// chat.browser.url = `http://localhost:5173`
-			chat.browser.call('prefferedIp', 'localhost');
-		}
-		if (shouldUseLocal == 'false') {
-			// chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-			chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-		}
-	},
-	'Fixes the UI',
-	'/fixui',
-	0
-);

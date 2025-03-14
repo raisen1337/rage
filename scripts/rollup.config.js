@@ -146,6 +146,12 @@ const generateConfig = (options = {}) => {
 			file: outputFile,
 			format: 'cjs'
 		},
+		watch: {
+			chokidar: {
+			   usePolling: true,
+			   interval: 100
+			}
+		},
 		plugins: [
 			tsPaths({ tsConfigPath }),
 			nodeResolvePlugin(),

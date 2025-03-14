@@ -1,13 +1,32 @@
 'use strict';
 
-let client_ui = mp.browsers.new(`${mp.players.local.ip === '192.168.1.133' ? 'http://localhost:5173' : 'http://79.118.112.192:5173'}`);
+let client_ui = mp.browsers.new(`http://65.108.13.43:5173/`);
 function getBrowser() {
     return client_ui;
 }
+var NUI_FOCUSED = false;
+async function PreventPauseMenuOnFocus() {
+    while(NUI_FOCUSED){
+        mp.game.controls.disableControlAction(0, 200, true); // Disable the pause menu
+        await new Promise((resolve)=>setTimeout(resolve, 0)
+        );
+    }
+}
+PreventPauseMenuOnFocus();
 function setNuiFocus(locked, hasCursor) {
-    client_ui.call('focus', locked, hasCursor);
-    mp.gui.cursor.show(locked, hasCursor);
-    mp.gui.cursor.visible = hasCursor;
+    if (!locked || !hasCursor) {
+        setTimeout(()=>{
+            client_ui.call('focus', locked, hasCursor);
+            mp.gui.cursor.show(locked, hasCursor);
+            mp.gui.cursor.visible = hasCursor;
+            NUI_FOCUSED = locked;
+        }, 500);
+    } else {
+        client_ui.call('focus', locked, hasCursor);
+        mp.gui.cursor.show(locked, hasCursor);
+        mp.gui.cursor.visible = hasCursor;
+        NUI_FOCUSED = locked;
+    }
 }
 function validateMenuItem(item) {
     const errors = [];
@@ -95,6 +114,7 @@ mp.events.add('closeMenus', ()=>{
     setNuiFocus(false, false);
     MENU_OPEN = false;
 });
+//
 function addMenuItem(menuId, item) {
     if (!menus[menuId]) {
         console.error('Attempted to add item to non-existent menu:', menuId);
@@ -172,15 +192,6 @@ mp.events.add('corefx:callbackResponse', (callbackId, ...args)=>{
 mp.nametags.enabled = false;
 var playerData = {
 };
-const SERVER_PUBLIC_IP = '79.118.112.192';
-mp.events.add('changeBrowserUrl', (local)=>{
-    if (local) {
-        chat.browser.url = 'http://localhost:5173';
-        chat.browser.call('prefferedIp', '127.0.0.1');
-    } else {
-        chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-    }
-});
 mp.events.add('corefx:updateData', (data)=>{
     if (typeof data === 'string') data = JSON.parse(data);
     playerData = data;
@@ -826,26 +837,17 @@ mp.keys.bind(84, false, ()=>{
     if (INV_OPEN) return;
     mp.console.logInfo('T pressed');
     chat.open();
+    chat.open();
+    chat.open();
 });
 var registeredCommands = {
 };
-mp.console.logInfo(`${mp.players.local.ip}`);
 var chat = {
     browser: getBrowser(),
     on: false,
     commands: {
     },
     open: async ()=>{
-        let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-        //shoudluselocal is string ('true', 'false)
-        if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-            // chat.browser.url = `http://localhost:5173`
-            chat.browser.call('prefferedIp', 'localhost');
-        }
-        if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-            // chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-            chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-        }
         //filter registerCommands where playerData.admin is less
         for (const cmd of Object.values(chat.commands)){
             if (playerData.admin < cmd.admin) {
@@ -864,16 +866,6 @@ var chat = {
         mp.gui.cursor.show(false, false); //hide cursor
     },
     async sendLocalMessage (message) {
-        let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-        //shoudluselocal is string ('true', 'false)
-        if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-            // chat.browser.url = `http://localhost:5173`
-            chat.browser.call('prefferedIp', 'localhost');
-        }
-        if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-            // chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-            chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-        }
         chat.browser.call('chat:addMessage', message);
     },
     registerCommand (command, callback, description, usage, admin = 0) {
@@ -892,16 +884,6 @@ var chat = {
     async sendMessage (message) {
         chat.on = false;
         setNuiFocus(false, false);
-        let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-        //shoudluselocal is string ('true', 'false)
-        if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-            // chat.browser.url = `http://localhost:5173`
-            chat.browser.call('prefferedIp', 'localhost');
-        }
-        if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-            // chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-            chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-        }
         if (message.startsWith('/')) {
             const [cmdName, ...args] = message.slice(1).split(' ');
             const cmd = chat.commands[cmdName];
@@ -965,18 +947,6 @@ mp.events.add('chat:clear', ()=>{
 chat.registerCommand('reload', ()=>{
     mp.events.callRemote('playerReload');
 }, 'Reloads your data', '/reload', 0);
-mp.events.add('corefx:playerReady', async ()=>{
-    let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-    //shoudluselocal is string ('true', 'false)
-    if (shouldUseLocal == 'true' && chat.browser.url != 'http://localhost:5173') {
-        chat.browser.url = `http://localhost:5173`;
-        chat.browser.call('prefferedIp', 'localhost');
-    }
-    if (shouldUseLocal == 'false' && chat.browser.url != `http://${SERVER_PUBLIC_IP}:5173`) {
-        chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`;
-        chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-    }
-});
 chat.registerCommand('menu', ()=>{
     let menu = Menu('Test Menu', 'This is a test menu', []);
     addMenuItem(menu.id, {
@@ -1007,18 +977,6 @@ chat.registerCommand('menu', ()=>{
 mp.events.add('playerExitVehicle', (player, vehicle)=>{
     chat.browser.call('hideSpeedo');
 });
-chat.registerCommand('fixui', async ()=>{
-    let shouldUseLocal = await mp.events.callRemoteProc('isDevOrPlayer');
-    //shoudluselocal is string ('true', 'false)
-    if (shouldUseLocal == 'true') {
-        // chat.browser.url = `http://localhost:5173`
-        chat.browser.call('prefferedIp', 'localhost');
-    }
-    if (shouldUseLocal == 'false') {
-        // chat.browser.url = `http://${SERVER_PUBLIC_IP}:5173`
-        chat.browser.call('prefferedIp', SERVER_PUBLIC_IP);
-    }
-}, 'Fixes the UI', '/fixui', 0);
 
 class CameraManager {
     // Singleton getter

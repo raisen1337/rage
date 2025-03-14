@@ -300,7 +300,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
             <div class="h-full w-[40rem] bg-white/0 mt-16 flex flex-col">
                 <!-- gender icon -->
                 <div class="flex flex-row items-center gap-4">
-                    <i class="fas fa-venus-mars text-3xl text-red-400"></i>
+                    <i class="fas fa-venus-mars text-3xl text-pink-400"></i>
                     <span class="text-white text-2xl font-medium">Sexul caracterului</span>
                 </div>
 
@@ -308,8 +308,8 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <button @click="() => {
                         setModel('mp_m_freemode_01')
                     }" class=" action-button w-[6rem] mt-4 h-[6rem] rounded-lg flex items-center justify-center
-                    bg-radient-circle-c group from-transparent to-zinc-900 border border-zinc-700/40 hover:to-red-950/20
-                    hover:border-red-900/40 active:to-red-950/20 active:border-red-900/40 active:text-red-500
+                    bg-radient-circle-c group from-transparent to-zinc-900 border border-zinc-700/40 hover:to-pink-950/20
+                    hover:border-pink-900/40 active:to-pink-950/20 active:border-pink-900/40 active:text-pink-500
                     transition-all">
                         <i
                             class="fa-solid text-2xl fa-mars text-white group-hover:text-white group-active:text-white transition-all"></i>
@@ -321,8 +321,8 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <button @click="() => {
                         setModel('mp_f_freemode_01')
                     }" class=" action-button w-[6rem] mt-4 h-[6rem] rounded-lg flex items-center justify-center
-                    bg-radient-circle-c group from-transparent to-zinc-900 border border-zinc-700/40 hover:to-red-950/20
-                    hover:border-red-900/40 active:to-red-950/20 active:border-red-900/40 active:text-red-500
+                    bg-radient-circle-c group from-transparent to-zinc-900 border border-zinc-700/40 hover:to-pink-950/20
+                    hover:border-pink-900/40 active:to-pink-950/20 active:border-pink-900/40 active:text-pink-500
                     transition-all">
                         <i
                             class="fa-solid text-2xl fa-venus text-white group-hover:text-white group-active:text-white transition-all"></i>
@@ -336,7 +336,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     </div>
                 </div>
                 <div class="flex flex-row mt-16 items-center gap-4">
-                    <i class="fas fa-passport text-3xl text-red-400"></i>
+                    <i class="fas fa-passport text-3xl text-pink-400"></i>
                     <span class="text-white text-2xl font-medium">Identitatea caracterului</span>
                 </div>
 
@@ -373,8 +373,8 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     </div>
 
                     <!-- Button -->
-                    <button @click="createCharacter" class="bg-radient-circle-c from-red-600 to-red-500 w-[25rem] h-[5rem] rounded-md mt-4
-                    flex items-center justify-center text-white text-lg font-medium hover:from-red-950 hover:to-red-900
+                    <button @click="createCharacter" class="bg-radient-circle-c from-pink-600 to-pink-500 w-[25rem] h-[5rem] rounded-md mt-4
+                    flex items-center justify-center text-white text-lg font-medium hover:from-pink-950 hover:to-pink-900
                     transition-all">
                         Creeaza caracterul
                     </button>
@@ -385,7 +385,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <div v-if="characterEditView === 'inheritance'"
                         class="flex flex-col gap-2 w-fit h-fit bg-white/0 z-10">
                         <div class="flex flex-row items-center gap-1">
-                            <i class="fas fa-user text-3xl text-red-400"></i>
+                            <i class="fas fa-user text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Trasaturi</span>
                         </div>
                         <div
@@ -396,11 +396,11 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                             <!-- arrows(left, right, same design as buttons below) -->
                             <div class="flex flex-row items-center gap-2">
                                 <button @click="updateFather(father - 1)"
-                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500  transition-all border-2 border-white/10">
+                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500  transition-all border-2 border-white/10">
                                     <i class="fas fa-arrow-left text-2xl"></i>
                                 </button>
                                 <button @click="updateFather(father + 1)"
-                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500  transition-all border-2 border-white/10">
+                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500  transition-all border-2 border-white/10">
                                     <i class="fas fa-arrow-right text-2xl"></i>
                                 </button>
                             </div>
@@ -413,17 +413,17 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                             <!-- arrows(left, right, same design as buttons below) -->
                             <div class="flex flex-row items-center gap-2">
                                 <button @click="updateMother(mother - 1)"
-                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500  transition-all border-2 border-white/10">
+                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500  transition-all border-2 border-white/10">
                                     <i class="fas fa-arrow-left text-2xl"></i>
                                 </button>
                                 <button @click="updateMother(mother + 1)"
-                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500  transition-all border-2 border-white/10">
+                                    class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500  transition-all border-2 border-white/10">
                                     <i class="fas fa-arrow-right text-2xl"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="flex flex-row items-center gap-2 mt-3">
-                            <i class="fas fa-user text-3xl text-red-400"></i>
+                            <i class="fas fa-user text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Asemanare trasaturi</span>
                         </div>
                         <div
@@ -441,7 +441,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <div v-else-if="characterEditView === 'features'"
                         class="flex flex-col gap-2 w-fit h-fit bg-white/0 z-10">
                         <div class="flex flex-row items-center gap-1">
-                            <i class="fas fa-face-smile text-3xl text-red-400"></i>
+                            <i class="fas fa-face-smile text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Trasaturi faciale</span>
                         </div>
                         <span class="text-white/40 text-lg font-light">Foloseste slider-ul pentru a modifica trasaturile
@@ -471,7 +471,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <div v-else-if="characterEditView === 'appearance'"
                         class="flex flex-col gap-2 w-fit h-fit bg-white/0 z-10">
                         <div class="flex flex-row items-center gap-1">
-                            <i class="fas fa-face-smile text-3xl text-red-400"></i>
+                            <i class="fas fa-face-smile text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Aparenta</span>
                         </div>
                         <span class="text-white/40 text-lg font-light">Fa-ti caracterul sa arate asa cum vrei tu!</span>
@@ -506,7 +506,7 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     <div v-if="characterEditView === 'x'"
                         class="flex flex-col gap-2 w-fit h-fit bg-white/0 !z-[100000000]">
                         <div class="flex flex-row items-center gap-1">
-                            <i class="fas fa-tshirt text-3xl text-red-400"></i>
+                            <i class="fas fa-tshirt text-3xl text-pink-400"></i>
                             <span class="text-white text-xl font-medium">Clothing</span>
                         </div>
                         <span class="text-white/40 text-lg font-light">Modifica-ti hainele si accesoriile!</span>
@@ -525,11 +525,11 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <button @click="updateComponentDrawable(component.component_id, -1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-left text-2xl"></i>
                                         </button>
                                         <button @click="updateComponentDrawable(component.component_id, 1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-right text-2xl"></i>
                                         </button>
                                     </div>
@@ -555,11 +555,11 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                                     </div>
                                     <div class="flex flex-row items-center gap-2">
                                         <button @click="updatePropDrawable(prop.prop_id, -1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-left text-2xl"></i>
                                         </button>
                                         <button @click="updatePropDrawable(prop.prop_id, 1)"
-                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-red-500 hover:bg-red-500 transition-all border-2 border-white/10">
+                                            class="flex flex-row items-center justify-center rounded-lg w-[3rem] h-[3rem] text-white hover:border-pink-500 hover:bg-pink-500 transition-all border-2 border-white/10">
                                             <i class="fas fa-arrow-right text-2xl"></i>
                                         </button>
                                     </div>
@@ -580,20 +580,20 @@ mp.events.add('clothesData', (comps: any, props: any) => {
                     </div>
                     <div class="flex flex-col gap-2 w-fit h-fit bg-white/0 z-10">
                         <button @click="characterEditView = 'inheritance'"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 active:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 active:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-face-smile text-2xl"></i>
                         </button>
                         <button @click="characterEditView = 'features'"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-head-side text-2xl"></i>
                         </button>
                         <button @click="characterEditView = 'appearance'"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-eye text-2xl"></i>
                         </button>
                         <!-- clothing -->
                         <button @click="openClothesMenu"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-tshirt text-2xl"></i>
                         </button>
 
@@ -602,19 +602,19 @@ mp.events.add('clothesData', (comps: any, props: any) => {
 
                         <!-- head -->
                         <button @click="switchCamera('head')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-head-side text-2xl"></i>
                         </button>
 
                         <!-- body -->
                         <button @click="switchCamera('body')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-child text-2xl"></i>
                         </button>
 
                         <!-- legs -->
                         <button @click="switchCamera('legs')"
-                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-red-500 hover:bg-red-500 focus:bg-red-500 transition-all border-2 border-white/10">
+                            class="flex flex-row items-center justify-center z-10 hover:cursor-pointer rounded-lg w-[5rem] h-[5rem] text-white hover:border-pink-500 hover:bg-pink-500 focus:bg-pink-500 transition-all border-2 border-white/10">
                             <i class="fas fa-shoe-prints text-2xl"></i>
                         </button>
 

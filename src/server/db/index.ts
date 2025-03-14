@@ -107,7 +107,8 @@ Account.init(
         },
         weapons: {
             type: DataTypes.JSON,
-            allowNull: false
+            allowNull: false,
+            defaultValue: JSON.stringify([]),
         },
         created_at: {
             type: DataTypes.DATE,

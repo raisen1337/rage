@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, nextTick, computed } from 'vue';
+import {
+  ref, onMounted, onUnmounted, watch, nextTick, computed
+} from 'vue';
 
 declare const mp: any;
 
@@ -18,7 +20,7 @@ const currentInputBeforeHistory = ref('');
 
 const colorClasses = {
   '^1': 'text-yellow-400',
-  '^2': 'text-red-400',
+  '^2': 'text-pink-400',
   '^3': 'text-green-400',
   '^4': 'text-blue-400',
   '^5': 'text-purple-400',
@@ -36,19 +38,31 @@ function colorize(text: string): string {
   let currentIndex = 0;
   let currentColorClass = 'text-white';
 
-  const regex = /\^[\d]/g;
+  const regex = /\^\d/g;
   let match;
 
   while ((match = regex.exec(text)) !== null) {
-    result += `<span class="${currentColorClass}">${text.substring(currentIndex, match.index)}</span>`;
+    result += `<span class="$ {
+currentColorClass
+}">$ {
+text.substring(currentIndex, match.index)
+}</span>`;
     const colorCode = match[0];
     currentColorClass = getColorClass(colorCode);
     const nextColorCodeIndex = text.indexOf('^', match.index + 2);
     const endIndex = nextColorCodeIndex === -1 ? text.length : nextColorCodeIndex;
-    result += `<span class="${currentColorClass}">${text.substring(match.index + 2, endIndex)}</span>`;
+    result += `<span class="$ {
+currentColorClass
+}">$ {
+text.substring(match.index + 2, endIndex)
+}</span>`;
     currentIndex = endIndex;
   }
-  result += `<span class="${currentColorClass}">${text.substring(currentIndex)}</span>`;
+  result += `<span class="$ {
+currentColorClass
+}">$ {
+text.substring(currentIndex)
+}</span>`;
   return result;
 }
 
@@ -63,10 +77,10 @@ function clearChatTimeout() {
 
 function setChatTimeout() {
   clearChatTimeout();
-  if (!isChatVisible.value) return;
+  if (!isChatVisible.value) return ;
   hideTimeout = window.setTimeout(() => {
     if (!isChatVisible.value || (inputRef.value && inputRef.value === document.activeElement)) {
-      return;
+      return ;
     }
     isChatVisible.value = false;
     mp.trigger('chat:close');
@@ -78,7 +92,8 @@ function addMessage() {
     mp.trigger('chat:sendMessage', input.value);
     // Add to history
     messageHistory.value.unshift(input.value);
-    if (messageHistory.value.length > 50) { // Limit history size
+    if (messageHistory.value.length > 50) {
+      // Limit history size
       messageHistory.value.pop();
     }
     historyIndex.value = -1;
@@ -101,7 +116,7 @@ function scrollToBottom() {
 
 // Handle command history navigation
 function handleHistoryNavigation(direction: 'up' | 'down') {
-  if (messageHistory.value.length === 0) return;
+  if (messageHistory.value.length === 0) return ;
 
   if (historyIndex.value === -1) {
     currentInputBeforeHistory.value = input.value;
@@ -129,7 +144,7 @@ function handleHistoryNavigation(direction: 'up' | 'down') {
 
 // Handle tab completion
 function handleTabCompletion() {
-  if (!input.value.startsWith('/')) return;
+  if (!input.value.startsWith('/')) return ;
 
   const currentInput = input.value.toLowerCase().slice(1);
   const matchingCommands = commands.value.filter(cmd => 
@@ -142,8 +157,8 @@ function handleTabCompletion() {
 }
 let NUI_LOCK = false
 
-mp.events.add('focus', (locked: boolean, hasCursor: boolean) => {
-    NUI_LOCK = locked;
+mp.events.add('focus', (locked: boolean) => {
+  NUI_LOCK = locked;
 });
 
 mp.events.add('chat:addMessage', (message: string) => {
@@ -159,13 +174,13 @@ mp.events.add('chat:setClipboard', (text: string) => {
 
 
 mp.events.add('chat:open', (cmds: any) => {
-  if(NUI_LOCK) return;
-  if (isInputVisible.value) return;
+  if (NUI_LOCK) return ;
+  if (isInputVisible.value) return ;
 
   try {
     cmds = JSON.parse(cmds);
   } catch (e) {
-    messages.value.push(`Error parsing commands: ${e}`);
+    messages.value.push(`Error parsing commands: $ {e}`);
     scrollToBottom();
   } finally {
     commands.value = Object.values(cmds);
@@ -243,7 +258,7 @@ onUnmounted(() => {
 <template>
   <div
     ref="chatContainer"
-    class="max-w-[50rem] font-rajdhani min-w-[50rem] font-arial h-[40rem] bg-red-500/0 flex flex-col p-4 !z-[500]"
+    class="max-w-[50rem] font-rajdhani min-w-[50rem] font-arial h-[40rem] bg-pink-500/0 flex flex-col p-4 !z-[500]"
   >
     <div
       class="min-h-[20rem] h-[20rem] max-h-[20rem] w-full stroke-text bg-black/0 font-semibold text-lg flex flex-col-reverse gap-2 p-2 overflow-y-scroll"
